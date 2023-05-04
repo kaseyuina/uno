@@ -1,6 +1,34 @@
 from uno_objects import card
 from uno_objects import player
 import random
+import pygame
+import os
+
+pygame.init()
+
+# Setting up game screen
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Uno")
+
+image_directory = "images"
+image_size = (140, 200)
+images = {}
+
+x = 20
+y = 50
+
+for filename in os.listdir(image_directory):
+    if filename.endswith(".png"):
+        path = os.path.join(image_directory, filename)
+        image = pygame.image.load(path)
+        image = pygame.transform.scale(image, image_size)
+        x += image_size[0] + 10
+        if x > SCREEN_WIDTH:
+            x = 50
+            y += image_size[1] + 10
+        images[image] = (x, y)
 
 f = open("uno_cards.txt", "r")
 cards = f.readlines()
